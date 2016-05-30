@@ -1,4 +1,4 @@
-# Arcrest
+# ArcREST
 [![Build status](https://secure.travis-ci.org/MatzFan/ArcREST.svg)](http://travis-ci.org/MatzFan/ArcREST)
 [![Gem Version](https://badge.fury.io/rb/ArcREST.svg)](http://badge.fury.io/rb/ArcREST)
 
