@@ -1,6 +1,6 @@
 require 'arcrest/version'
+require 'arcrest/catalog'
 
-# namespace
-module ArcREST
-  # Your code goes here...
+module ArcRest
+
 end

@@ -1,14 +1,44 @@
 # Arcrest
+[![Build status](https://secure.travis-ci.org/MatzFan/ArcREST.svg)](http://travis-ci.org/MatzFan/ArcREST)
+[![Gem Version](https://badge.fury.io/rb/ArcREST.svg)](http://badge.fury.io/rb/ArcREST)
 
 Placeholder for arcrest Ruby Gem
 
+## Requirements
+
+bundler
+
+
+## Limitations
+
+TBC
+
+
 ## Installation
+
+Add this line to your application's Gemfile:
+
+    $ gem 'arcrest'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
 
     $ gem install arcrest
 
+
 ## Usage
 
-TODO: Write usage instructions here
+TBC
+
+
+## Specification & Tests
+
+For the full specification clone this repo and run:
+
+    $ rake spec
 
 
 ## Contributing
