@@ -1,6 +1,6 @@
 # ArcREST
 [![Build status](https://secure.travis-ci.org/MatzFan/ArcREST.svg)](http://travis-ci.org/MatzFan/ArcREST)
-[![Gem Version](https://badge.fury.io/rb/ArcREST.svg)](http://badge.fury.io/rb/ArcREST)
+[![Gem Version](https://badge.fury.io/rb/arcrest.svg)](http://badge.fury.io/rb/arcrest)
 
 Placeholder for arcrest Ruby Gem
 

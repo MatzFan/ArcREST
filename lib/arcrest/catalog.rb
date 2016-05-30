@@ -1,34 +1,34 @@
-require 'net/http'
-require 'json'
-
 module ArcREST
   # a catalog of services
   class Catalog
-    attr_reader :metadata
-    PATH = '/arcgis/rest/services'.freeze
+    include ArcREST::Base
 
-    def initialize(host)
-      @host = host
+    attr_reader :meta, :version, :services
+
+    PATH = '/arcgis/rest/services'.freeze
+    BAD_ENDPOINT = 'Invalid endpoint'.freeze
+
+    def initialize(url)
+      @url = url
       @uri = uri
-      json_param
-      @metadata = metadata
+      @metadata = metadata(@uri)
+      @version = version
+      @services = services
     end
+
+    def version
+      @metadata['currentVersion']
+    end
+
+    def services
+      @metadata['services']
+    end
+
+    private
 
     def uri
-      raise ArgumentError, 'Invalid url' if URI(@host).path.casecmp(PATH) != 0
-      URI @host
-    end
-
-    def json_param
-      @uri.query = URI.encode_www_form(f: 'json')
-    end
-
-    def metadata
-      JSON.parse get
-    end
-
-    def get
-      Net::HTTP.get @uri
+      raise ArgumentError, BAD_ENDPOINT if URI(@url).path.casecmp(PATH) != 0
+      URI @url
     end
   end
 end
