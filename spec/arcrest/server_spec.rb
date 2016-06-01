@@ -1,5 +1,6 @@
 describe ArcREST::Server do
 
+  error = ArcREST::Server::BAD_ENDPOINT
   let(:url) { 'http://rmgsc.cr.usgs.gov/arcgis/rest/services/' }
   let(:bad_server_url) { ArcREST::Catalog.new('bad_url') }
   let(:server) { ArcREST::Server.new url }
@@ -13,7 +14,7 @@ describe ArcREST::Server do
 
     context 'with an invalid endpoint address' do
       it 'raises ArgumentError "Invalid endpoint address"' do
-        expect(-> { bad_server_url }).to raise_error(ArgumentError, 'Invalid endpoint')
+        expect(-> { bad_server_url }).to raise_error(ArgumentError, error)
       end
     end
   end

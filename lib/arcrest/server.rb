@@ -5,7 +5,7 @@ module ArcREST
   # adds metadata method
   class Server
     REGEX = /^\/arcgis\/rest\/services/i
-    BAD_ENDPOINT = 'Invalid endpoint'.freeze
+    BAD_ENDPOINT = 'Invalid ArcGIS endpoint'.freeze
 
     attr_reader :metadata, :version
 
@@ -24,7 +24,7 @@ module ArcREST
       @metadata['currentVersion']
     end
 
-    private
+    protected # sub-classes only
 
     def uri
       raise ArgumentError, BAD_ENDPOINT if (URI(@url).path =~ REGEX) != 0

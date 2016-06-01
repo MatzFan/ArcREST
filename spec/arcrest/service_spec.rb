@@ -5,6 +5,8 @@ map_service = endpoint + 'ecosys_US/MapServer'
 describe ArcREST::Service do
   let(:fs) { ArcREST::Service.new(feature_service) }
   let(:ms) { ArcREST::Service.new(map_service) }
+  let(:layer_names) { ['Ecosystems', 'Bioclimates', 'Land Surface Forms',
+                        'Surficial Lithology', 'Topographic Position'] }
 
   context '#new(url)' do
     context 'with a valid url address' do
@@ -14,13 +16,15 @@ describe ArcREST::Service do
     end
   end
 
-  context '#layers' do
-    it 'returns a list of layers indexable by ["id"]' do
-      expect(ms.layers.all? { |l| l.keys.include? 'id'}).to be true
+  context '#layer_ids' do
+    it 'returns a list of layer ids' do
+      expect(ms.layer_ids).to eq [0, 1, 2, 3, 4]
     end
+  end
 
-    it 'returns a list of layers indexable by ["name"]' do
-      expect(ms.layers.all? { |l| l.keys.include? 'name'}).to be true
+   context '#layer_names' do
+    it 'returns a list of layer names' do
+      expect(ms.layer_names).to eq layer_names
     end
   end
 
