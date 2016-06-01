@@ -1,26 +1,11 @@
-v10_21_server_endpoint = 'http://rmgsc.cr.usgs.gov/ArcGIS/rest/services'
+v10_21_catalog_url = 'http://rmgsc.cr.usgs.gov/ArcGIS/rest/services'
 
 describe ArcREST::Catalog do
-  let(:catalog) { ArcREST::Catalog.new(v10_21_server_endpoint) }
-  let(:bad_url) { ArcREST::Catalog.new('bad_url') }
+  let(:catalog) { ArcREST::Catalog.new(v10_21_catalog_url) }
 
-  context '#new(url)' do
-    context 'with a valid endpoint url address' do
-      it 'creates an instance of the class' do
-        expect(catalog.class).to eq ArcREST::Catalog
-      end
-    end
-
-    context 'with an invalid endpoint address' do
-      it 'raises ArgumentError "Invalid endpoint address"' do
-        expect(-> { bad_url }).to raise_error(ArgumentError, 'Invalid endpoint')
-      end
-    end
-  end
-
-  context '#version' do
-    it 'returns the server version number' do
-      expect(catalog.version).to eq 10.21
+  context '#folders' do
+    it 'returns a list of sub-folder names' do
+      expect(catalog.folders).to eq %w(Utilities)
     end
   end
 

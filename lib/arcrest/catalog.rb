@@ -1,34 +1,19 @@
 module ArcREST
   # a catalog of services
-  class Catalog
-    include ArcREST::Base
-
-    attr_reader :meta, :version, :services
-
-    PATH = '/arcgis/rest/services'.freeze
-    BAD_ENDPOINT = 'Invalid endpoint'.freeze
+  class Catalog < Server
+    attr_reader :folders, :services
 
     def initialize(url)
-      @url = url
-      @uri = uri
-      @metadata = metadata(@uri)
-      @version = version
+      super
       @services = services
     end
 
-    def version
-      @metadata['currentVersion']
+    def folders
+      @metadata['folders']
     end
 
     def services
       @metadata['services']
-    end
-
-    private
-
-    def uri
-      raise ArgumentError, BAD_ENDPOINT if URI(@url).path.casecmp(PATH) != 0
-      URI @url
     end
   end
 end

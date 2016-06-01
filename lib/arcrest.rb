@@ -1,7 +1,7 @@
 require 'arcrest/version'
-require 'arcrest/base'
+require 'arcrest/server'
 require 'arcrest/catalog'
-require 'arcrest/feature_service'
+require 'arcrest/service'
 
 module ArcRest
 
