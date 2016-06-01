@@ -13,11 +13,11 @@ module ArcREST
     end
 
     def max_record_count
-      @metadata['maxRecordCount']
+      @json['maxRecordCount']
     end
 
     def capabilities
-      @metadata['capabilities'].split ','
+      @json['capabilities'].split ','
     end
 
     def layer_ids
@@ -31,7 +31,7 @@ module ArcREST
     private
 
     def layers
-      @metadata['layers']
+      @json['layers']
     end
   end
 end

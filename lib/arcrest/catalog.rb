@@ -9,11 +9,11 @@ module ArcREST
     end
 
     def folders
-      @metadata['folders']
+      @json['folders']
     end
 
     def services
-      @metadata['services']
+      @json['services']
     end
   end
 end

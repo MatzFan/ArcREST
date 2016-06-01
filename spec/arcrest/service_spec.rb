@@ -8,14 +8,6 @@ describe ArcREST::Service do
   let(:layer_names) { ['Ecosystems', 'Bioclimates', 'Land Surface Forms',
                         'Surficial Lithology', 'Topographic Position'] }
 
-  context '#new(url)' do
-    context 'with a valid url address' do
-      it 'creates an instance of the class' do
-        expect(ms.class).to eq ArcREST::Service
-      end
-    end
-  end
-
   context '#layer_ids' do
     it 'returns a list of layer ids' do
       expect(ms.layer_ids).to eq [0, 1, 2, 3, 4]

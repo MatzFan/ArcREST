@@ -7,7 +7,7 @@ describe ArcREST::Server do
 
   context '#new(url)' do
     context 'with a valid endpoint url address' do
-      it 'creates an instance of the class' do
+      it 'returns an instance of the class' do
         expect(server.class).to eq ArcREST::Server
       end
     end
@@ -19,9 +19,9 @@ describe ArcREST::Server do
     end
   end
 
-  context '#metadata' do
-    it 'returns a hash of metadata information' do
-      expect(server.metadata(URI(url)).class).to eq Hash
+  context '#json' do
+    it 'returns a hash of server data' do
+      expect(server.json(URI(url)).class).to eq Hash
     end
   end
 
