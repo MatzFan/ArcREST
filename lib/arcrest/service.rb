@@ -1,15 +1,14 @@
 module ArcREST
   # a FeatureService or a MapService
   class Service < Server
-    attr_reader :max_record_count, :capabilities, :layer_ids, :layer_names
+    attr_reader :max_record_count, :capabilities, :layers
 
     def initialize(url)
       super
-      @max_record_count = max_record_count
-      @capabilities = capabilities
-      @layers = layers
-      @layer_ids = layer_ids
-      @layer_names = layer_names
+      @max_record_count = max_record_count # may be nil
+      @capabilities = capabilities # may be empty
+      @layers_hash = layers_hash # :id, :name
+      @layers = layers # may be empty
     end
 
     def max_record_count
@@ -17,21 +16,21 @@ module ArcREST
     end
 
     def capabilities
-      @json['capabilities'].split ','
+      @json['capabilities'] ? @json['capabilities'].split(',') : nil
     end
 
-    def layer_ids
-      @layers.map { |l| l['id'] }
-    end
-
-    def layer_names
-      @layers.map { |l| l['name'] }
+    def layers
+      layer_ids.map { |n| Layer.new("#{@url}/#{n.to_s}") }
     end
 
     private
 
-    def layers
+    def layers_hash
       @json['layers']
+    end
+
+    def layer_ids
+      @layers_hash.map { |l| l['id'] } if @layers_hash
     end
   end
 end

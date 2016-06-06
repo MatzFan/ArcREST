@@ -1,7 +1,7 @@
 module ArcREST
   # a layer
   class Layer < Server
-    WHERE_ALL_FIELDS = { where: '1=1', outFields: '*' }.freeze
+    DEFAULT_PARAMS = { where: '1=1', outFields: '*' }.freeze
 
     attr_reader :id, :name, :type
 
@@ -33,14 +33,22 @@ module ArcREST
     end
 
     def query(options = {})
-      json(build_uri, WHERE_ALL_FIELDS.merge(options))
+      json(build_uri, DEFAULT_PARAMS.merge(options))
     end
 
-    def feature_count
-      query(returnCountOnly: true)['count']
+    def count
+      @version > 10 ? count_only_true : v10_0_count # returnCountOnly from v10.1
     end
 
     private
+
+    def v10_0_count
+      query(returnIdsOnly: true)['objectIds'].size
+    end
+
+    def count_only_true
+      query(returnCountOnly: true)['count']
+    end
 
     def build_uri
       URI::HTTP.build(host: @uri.host, path: "#{@uri.path}/query")

@@ -12,6 +12,7 @@ module ArcREST
     def initialize(url)
       @url = url
       @uri = uri
+      @server_uri = server_uri
       @json = json(@uri)
       @version = version
     end
@@ -21,7 +22,7 @@ module ArcREST
     end
 
     def version
-      @json['currentVersion']
+      json(server_uri)['currentVersion'] # subclasses use server uri
     end
 
     protected # sub-classes only
@@ -29,6 +30,10 @@ module ArcREST
     def uri
       raise ArgumentError, BAD_ENDPOINT if (URI(@url).path =~ REGEX) != 0
       URI @url
+    end
+
+    def server_uri
+      URI::HTTP.build(host: @uri.host, path: '/arcgis/rest/services')
     end
 
     def add_json_param_to(hash)
