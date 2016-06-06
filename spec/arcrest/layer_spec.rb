@@ -1,5 +1,5 @@
 endpoint = 'http://rmgsc.cr.usgs.gov/ArcGIS/rest/services/' # v10.21
-feature_layer_url = endpoint + 'geomac_fires/FeatureServer/1'
+feature_layer_url = endpoint + 'geomac_fires/FeatureServer/2'
 raster_layer_url = endpoint + 'ecosys_US/MapServer/0'
 
 v10_0 = 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services/'
@@ -13,14 +13,14 @@ describe ArcREST::Layer do
 
   context '#id' do
     it 'returns the layer id' do
-      expect(feature_layer.id).to eq 1
+      expect(feature_layer.id).to eq 2
       expect(raster_layer.id).to eq 0
     end
   end
 
   context '#name' do
     it 'returns the layer name' do
-      expect(feature_layer.name).to eq 'Large Fire Points'
+      expect(feature_layer.name).to eq 'Fire Perimeters'
       expect(raster_layer.name).to eq 'Ecosystems'
     end
   end
@@ -33,6 +33,12 @@ describe ArcREST::Layer do
   end
 
   context 'for a Feature Layer' do ############################################
+    context '#object_ids' do
+      it 'returns a list of object Ids' do
+        expect(feature_layer.object_ids.all? { |i| i.is_a? Integer }).to eq true
+      end
+    end
+
     context '#fields' do
       it 'returns a list of field hash data' do
         expect(feature_layer.fields.all? { |f| f.class == Hash }).to eq true
@@ -59,14 +65,22 @@ describe ArcREST::Layer do
       end
     end
 
-    context '#query(options)' do
-      it 'returns a Hash containing a "features" key' do
-        expect(feature_layer.query.keys).to include 'features'
+    context '#features(options)' do
+      it 'returns a list of hashes, whose keys are: "geometry", "attributes"' do
+        feature_layer.features.map(&:keys).each do |keys|
+          expect(keys).to eq %w(geometry attributes)
+        end
       end
     end
   end
 
   context 'for a Raster Layer' do #############################################
+    context '#object_ids' do
+      it 'returns nil' do
+        expect(raster_layer.object_ids).to be_nil
+      end
+    end
+
     context '#fields' do
       it 'returns a list of field hash data' do
         expect(raster_layer.fields).to be_nil
@@ -85,9 +99,9 @@ describe ArcREST::Layer do
       end
     end
 
-    context '#query(options)' do
-      it 'returns a Hash containing a "features" key' do
-        expect(raster_layer.query.keys).to eq ['error']
+    context '#features(options)' do
+      it 'returns nil' do
+        expect(raster_layer.features).to be_nil
       end
     end
   end

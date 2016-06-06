@@ -32,18 +32,22 @@ module ArcREST
       @json['fields']
     end
 
-    def query(options = {})
-      json(build_uri, DEFAULT_PARAMS.merge(options))
+    def count
+      @version > 10 ? count_only_true : object_ids.count # returnCountOnly from v10.1
     end
 
-    def count
-      @version > 10 ? count_only_true : v10_0_count # returnCountOnly from v10.1
+    def object_ids # care - must specify outFields to overide default
+      query(outFields: '', returnIdsOnly: true)['objectIds']
+    end
+
+    def features(options = {})
+      query(options)['features']
     end
 
     private
 
-    def v10_0_count
-      query(returnIdsOnly: true)['objectIds'].size
+    def query(options = {})
+      json(build_uri, DEFAULT_PARAMS.merge(options))
     end
 
     def count_only_true

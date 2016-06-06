@@ -7,7 +7,7 @@ module ArcREST
     REGEX = /^\/arcgis\/rest\/services/i
     BAD_ENDPOINT = 'Invalid ArcGIS endpoint'.freeze
 
-    attr_reader :json, :version
+    attr_reader :url, :json, :version
 
     def initialize(url)
       @url = url

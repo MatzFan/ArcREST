@@ -7,7 +7,6 @@ module ArcREST
       super
       @max_record_count = max_record_count # may be nil
       @capabilities = capabilities # may be empty
-      @layers_hash = layers_hash # :id, :name
       @layers = layers # may be empty
     end
 
@@ -20,17 +19,13 @@ module ArcREST
     end
 
     def layers
-      layer_ids.map { |n| Layer.new("#{@url}/#{n.to_s}") }
+      @json['layers']
     end
 
     private
 
-    def layers_hash
-      @json['layers']
-    end
-
     def layer_ids
-      @layers_hash.map { |l| l['id'] } if @layers_hash
+      @layers.map { |l| l['id'] } if @layers
     end
   end
 end

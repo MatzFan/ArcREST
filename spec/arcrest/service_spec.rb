@@ -20,8 +20,10 @@ describe ArcREST::Service do
   end
 
   context '#layers' do
-    it 'returns a list of ArcREST::Layer objects' do
-      expect(ms.layers.all? { |l| l.class == ArcREST::Layer }).to eq true
+    it 'returns a list of layers hashes which include "id" and "name" keys' do
+      ms.layers.map(&:keys).each do |keys|
+        expect(%w(id name).all? { |k| keys.include? k }).to eq true
+      end
     end
   end
 
