@@ -2,7 +2,7 @@
 [![Build status](https://secure.travis-ci.org/MatzFan/ArcREST.svg)](http://travis-ci.org/MatzFan/ArcREST)
 [![Gem Version](https://badge.fury.io/rb/arcrest.svg)](http://badge.fury.io/rb/arcrest)
 
-arcrest Ruby Gem wrapper around the [ArcGIS REST API](http://services.arcgisonline.com/arcgis/sdk/rest/)
+Ruby Gem wrapper around the [ArcGIS REST API](http://services.arcgisonline.com/arcgis/sdk/rest/)
 
 ## Requirements
 
@@ -16,23 +16,23 @@ require 'arcrest'
 
 catalog = ArcREST::Catalog.new('http://rmgsc.cr.usgs.gov/arcgis/rest/services')
 puts catalog.services
-#=>{"name"=>"cwqdr_main", "type"=>"MapServer"}
-{"name"=>"ecosys_Africa", "type"=>"MapServer"}
-{"name"=>"ecosys_SA", "type"=>"MapServer"}
-...
+#=> {"name"=>"cwqdr_main", "type"=>"MapServer"}
+#=> {"name"=>"ecosys_Africa", "type"=>"MapServer"}
+#=> {"name"=>"ecosys_SA", "type"=>"MapServer"}
+#=> ...
 
 service = ArcREST::Service.new('http://rmgsc.cr.usgs.gov/arcgis/rest/services/geomac_fires/FeatureServer')
 puts service.layers
-#=> #<ArcREST::Layer:0x007fbfb928f890>
-#<ArcREST::Layer:0x007fbfb9266fd0>
-#<ArcREST::Layer:0x007fbfb923da18>
-#<ArcREST::Layer:0x007fbfb9215928>
+#=> {"id"=>1, "name"=>"Large Fire Points"}
+#=> {"id"=>2, "name"=>"Fire Perimeters"}
+#=> {"id"=>3, "name"=>"MODIS Thermal Satellite"}
+#=> {"id"=>4, "name"=>"Inactive Fire Perimeters"}
 
 puts service.layers.map { |l| "#{l.id}: #{l.name}"}
-#=>1: Large Fire Points
-2: Fire Perimeters
-3: MODIS Thermal Satellite
-4: Inactive Fire Perimeters
+#=> 1: Large Fire Points
+#=> 2: Fire Perimeters
+#=> 3: MODIS Thermal Satellite
+#=> 4: Inactive Fire Perimeters
 
 layer = ArcREST::Layer.new("#{service.url}/2")
 puts layer.name
@@ -45,15 +45,15 @@ puts layer.object_ids.inspect
 #=> [681, 682, 688, 690, 614, 618, 619, 653, 683, 684, 685, 686, 687, 689]
 puts layer.fields
 #=> {"name"=>"objectid", "type"=>"esriFieldTypeOID", "alias"=>"OBJECTID", "domain"=>nil, "editable"=>false, "nullable"=>false}
-{"name"=>"agency", "type"=>"esriFieldTypeString", "alias"=>"agency", "domain"=>nil, "editable"=>true, "nullable"=>true, "length"=>15}
-...
+#=> {"name"=>"agency", "type"=>"esriFieldTypeString", "alias"=>"agency", "domain"=>nil, "editable"=>true, "nullable"=>true, "length"=>15}
+#=> ...
 
 features = layer.features(where: "agency='BLM'", returnGeometry: false).first # see 'Usage' for more on how to specify query parameters
 puts features.count
 #=> 2
 puts features.first
 #=> {"objectid"=>690, "agency"=>"BLM", "comments"=>" ", "active"=>"Y"...
-```ruby
+```
 
 
 ## Limitations
@@ -90,7 +90,7 @@ For the full specification clone this repo and run:
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/arcrest. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/arcrest
 
 
 ## License

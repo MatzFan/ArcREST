@@ -21,11 +21,5 @@ module ArcREST
     def layers
       @json['layers']
     end
-
-    private
-
-    def layer_ids
-      @layers.map { |l| l['id'] } if @layers
-    end
   end
 end
