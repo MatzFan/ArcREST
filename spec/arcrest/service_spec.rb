@@ -1,4 +1,4 @@
-endpoint = 'http://rmgsc.cr.usgs.gov/arcgis/rest/services/' #v10.21
+endpoint = 'http://rmgsc.cr.usgs.gov/arcgis/rest/services/' # v10.21
 feature_service = endpoint + 'geomac_fires/FeatureServer'
 map_service = endpoint + 'ecosys_US/MapServer'
 
@@ -10,11 +10,13 @@ describe ArcREST::Service do
   let(:ms) { ArcREST::Service.new(map_service) }
 
   let(:v10_0_fs) { ArcREST::Service.new(v10_0_url) }
-  let(:layer_names) { ['Ecosystems', 'Bioclimates', 'Land Surface Forms',
-                        'Surficial Lithology', 'Topographic Position'] }
+  let(:layer_names) do
+    ['Ecosystems', 'Bioclimates', 'Land Surface Forms', 'Surficial Lithology',
+     'Topographic Position']
+  end
 
-  context '#new' do
-    it 'can be instantaited with the url argument' do
+  context '#new(url)' do
+    it 'can be instantiated with a url string' do
       expect(-> { ArcREST::Service.new(feature_service) }).not_to raise_error
     end
   end
