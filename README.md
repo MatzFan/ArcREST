@@ -9,9 +9,9 @@ Ruby Gem wrapper around the [ArcGIS REST API](http://services.arcgisonline.com/a
 bundler
 
 
-## Limitations
+## Current Limitations
 
-API FeatureServer (JSON) query capabilities only at present. Unauthenticated calls only (please raise an issue if you wish this to be supported)
+API FeatureServer query capabilities only at present. Unauthenticated calls only (please raise an issue if you wish this to be supported)
 
 
 ## Installation
@@ -63,21 +63,27 @@ puts layer.fields
 #=> {"name"=>"objectid", "type"=>"esriFieldTypeOID", "alias"=>"OBJECTID", "domain"=>nil, "editable"=>false, "nullable"=>false}
 #=> {"name"=>"agency", "type"=>"esriFieldTypeString", "alias"=>"agency", "domain"=>nil, "editable"=>true, "nullable"=>true, "length"=>15}
 #=> ...
+```
 
-features = layer.features(where: "agency='BLM'", options: { returnGeometry: false })
+Once you have a Layer object, you can query it's features. The [documention](http://services.arcgisonline.com/arcgis/sdk/rest/index.html#/Query_Feature_Service_Layer/) shows the possibilities. Here is a very simple example:
+
+```ruby
+features = layer.features(where: "agency='BLM'", returnGeometry: false)
 puts features.count
 #=> 2
 puts features.first
 #=> {"objectid"=>690, "agency"=>"BLM", "comments"=>" ", "active"=>"Y"...
 ```
 
-```features``` takes an options hash of API call params. Invalid key values raise an error. Valid params for the server can be listed as follows - or by consulting the [docs](http://services.arcgisonline.com/arcgis/sdk/rest/index.html#/Query_Feature_Service_Layer/). The only defaults set are ```f: 'pjson'``` - in order for responses to be parsed and ```outFields: '*'``` which requests data for all fields returned.
+```features``` takes an options hash of API call params. Invalid key values raise an error. Valid params for the server can be listed like this:
 ```ruby
-puts layer.params
+puts layer.valid_opts.inspect
 #=> ["dbVersion", "distance", "geometry", "geometryPrecision"...
 ```
+or by consulting the [docs](http://services.arcgisonline.com/arcgis/sdk/rest/index.html#/Query_Feature_Service_Layer/). One default is set: ```outFields: '*'``` - which requests data for all fields.
 
-```:where``` key is used with any valid SQL to query the layer fields. The default is '1=1' which returns all records up to ```maxRecordCount``` value, usually 1,000. An InvalidQuery error is raised if the server gives a 400 error of this form:
+
+The ```:where``` key is used with any valid SQL to query the layer fields. The default is '1=1' which returns all records (up to the ```@max_record_count``` value, usually 1,000). An InvalidQuery error is raised if the server gives a 400 error of this form:
 ```json
 {
   "error": {
@@ -92,9 +98,9 @@ puts layer.params
 ```
 
 
-## Specification/Documentation & Tests
+## Specification & Tests
 
-Full specifciation documentation is available for each build at [Travis](https://travis-ci.org/MatzFan/ArcREST). To run the tests yourself clone this repo and run:
+Full specification documentation is available for each build at [Travis](https://travis-ci.org/MatzFan/ArcREST). To run the tests yourself clone this repo and run:
 
     $ rake spec
 

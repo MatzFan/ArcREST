@@ -1,4 +1,4 @@
-# adds ability to dynamically set instance attrubutes & accessors
+# adds ability to dynamically set instance vars & accessors
 module Attributable
   def create_method(name, &block)
     self.class.send(:define_method, name.to_sym, &block)

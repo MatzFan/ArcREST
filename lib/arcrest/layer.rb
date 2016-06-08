@@ -17,7 +17,7 @@ module ArcREST
                      outStatistics returnGeometry returnM returnZ).freeze
     PARAMS_10_3 = %w(returnExtentOnly resultOffset resultRecordCount).freeze
 
-    attr_reader :params # other accessors set in constructor
+    attr_reader :valid_params # other accessors set in constructor
 
     def initialize(url)
       super
@@ -36,7 +36,7 @@ module ArcREST
       query(options)['features']
     end
 
-    def params
+    def valid_opts
       return PARAMS if @version < 10 || @version == 10.0
       return (PARAMS + PARAMS_SP1).sort if @version < 10.1
       return (PARAMS + PARAMS_SP1 + PARAMS_10_1).sort if @version < 10.2
@@ -63,13 +63,17 @@ module ArcREST
       valid_resp(build_uri, DEFAULT_PARAMS.merge(options))
     end
 
-    def valid_resp(uri, options)
-      raise InvalidQuery if (response = json(uri, options)).keys.include? ERR
-      response
+    def valid_resp(uri, opts)
+      raise InvalidQuery, m(opts) if (resp = json(uri, opts)).keys.include? ERR
+      resp
+    end
+
+    def m(options)
+      "The following query parameters resulted in a 400 response:\n#{options}"
     end
 
     def validate(keys)
-      keys.all? { |k| raise InvalidOption, msg(k) unless params.include? k }
+      keys.all? { |k| raise InvalidOption, msg(k) unless valid_opts.include? k }
     end
 
     def msg(key)

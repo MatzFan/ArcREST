@@ -4,7 +4,7 @@ require 'json'
 module ArcREST
   # adds metadata method
   class Server
-    REGEX = /^\/arcgis\/rest\/services/i
+    REGEX = %r{^\/arcgis\/rest\/services}i
     BAD_ENDPOINT = 'Invalid ArcGIS endpoint'.freeze
 
     attr_reader :url, :json, :version
@@ -25,7 +25,7 @@ module ArcREST
       json(server_uri)['currentVersion'] # subclasses use server uri
     end
 
-    protected # sub-classes only
+    protected
 
     def uri
       raise ArgumentError, BAD_ENDPOINT if (URI(@url).path =~ REGEX) != 0
