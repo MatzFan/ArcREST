@@ -11,7 +11,7 @@ bundler
 
 ## Limitations
 
-API FeatureServer query capabilities only at present. Unauthenticated calls only (please raise an issue if you wish this to be supported)
+API FeatureServer (JSON) query capabilities only at present. Unauthenticated calls only (please raise an issue if you wish this to be supported)
 
 
 ## Installation
@@ -71,8 +71,13 @@ puts features.first
 #=> {"objectid"=>690, "agency"=>"BLM", "comments"=>" ", "active"=>"Y"...
 ```
 
-Layer #features method take 2 keyword args; ```where:``` and ```options:```
-```where:``` is used with any valid SQL to query the layer fields. An InvalidQuery error is raised if the server gives a 400 error of this form:
+```features``` takes an options hash of API call params. Invalid key values raise an error. Valid params for the server can be listed as follows - or by consulting the [docs](http://services.arcgisonline.com/arcgis/sdk/rest/index.html#/Query_Feature_Service_Layer/). The only defaults set are ```f: 'pjson'``` - in order for responses to be parsed and ```outFields: '*'``` which requests data for all fields returned.
+```ruby
+puts layer.params
+#=> ["dbVersion", "distance", "geometry", "geometryPrecision"...
+```
+
+```:where``` key is used with any valid SQL to query the layer fields. The default is '1=1' which returns all records up to ```maxRecordCount``` value, usually 1,000. An InvalidQuery error is raised if the server gives a 400 error of this form:
 ```json
 {
   "error": {
@@ -86,16 +91,10 @@ Layer #features method take 2 keyword args; ```where:``` and ```options:```
 }
 ```
 
-```options:``` is used to specify the additional query parameter settings. Valid param settings for the server can be listed as follows. Invalid key values raise an error.
-```ruby
-puts layer.params
-#=> ["dbVersion", "distance", "geometry", "geometryPrecision"...
-```
 
+## Specification/Documentation & Tests
 
-## Specification & Tests
-
-For the full specification clone this repo and run:
+Full specifciation documentation is available for each build at [Travis](https://travis-ci.org/MatzFan/ArcREST). To run the tests yourself clone this repo and run:
 
     $ rake spec
 

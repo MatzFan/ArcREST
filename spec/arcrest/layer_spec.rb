@@ -37,6 +37,14 @@ describe ArcREST::Layer do
     end
   end
 
+  context '#max_record_count' do
+    it 'returns the limit on number of features returned from a query' do
+      expect(feature_layer.max_record_count).to eq 1000
+      expect(raster_l.max_record_count).to be_nil
+    end
+  end
+
+
   context 'for a Feature Layer' do ############################################
     context '#object_ids' do
       it 'returns a list of object Ids' do
@@ -70,14 +78,14 @@ describe ArcREST::Layer do
       end
     end
 
-    context '#features(:where, :options)' do
+    context '#features(options)' do
       it 'raises InvalidOption error with an invalid option key' do
-        lambda = -> { feature_layer.features(options: { invalidOption: true }) }
+        lambda = -> { feature_layer.features(invalidOption: true) }
         expect(lambda).to raise_error ArcREST::InvalidOption
       end
 
       it 'raises InvalidOption with an invalid option for the server version' do
-        l = -> { v10_0_feature_layer.features(options: { returnM: true }) }
+        l = -> { v10_0_feature_layer.features(returnM: true) }
         expect(l).to raise_error ArcREST::InvalidOption
       end
 
