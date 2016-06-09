@@ -1,4 +1,5 @@
 require 'net/http'
+require 'open-uri'
 require 'json'
 
 module ArcREST
@@ -42,7 +43,7 @@ module ArcREST
 
     def get(uri, options = {})
       uri.query = URI.encode_www_form(add_json_param_to(options))
-      Net::HTTP.get uri
+      open(uri).read # net/http doesn't follow redirects..
     end
   end
 end
