@@ -89,9 +89,9 @@ describe ArcREST::Layer do
         expect(l).to raise_error ArcREST::InvalidOption
       end
 
-      it 'raises InvalidQuery with an invalid where: String' do
+      it 'raises BadQuery with an invalid where: String' do
         l = -> { v10_0_feature_layer.features(where: 'invalid SQL') }
-        expect(l).to raise_error ArcREST::InvalidQuery
+        expect(l).to raise_error ArcREST::BadQuery
       end
 
       it 'returns a list of hashes, whose keys are: "geometry", "attributes"' do
@@ -104,8 +104,8 @@ describe ArcREST::Layer do
 
   context 'for a Raster Layer' do #############################################
     context '#object_ids' do
-      it 'raises InvalidQuery error' do
-        expect(-> { raster_l.object_ids }).to raise_error ArcREST::InvalidQuery
+      it 'raises BadQuery error' do
+        expect(-> { raster_l.object_ids }).to raise_error ArcREST::BadQuery
       end
     end
 
@@ -123,13 +123,13 @@ describe ArcREST::Layer do
 
     context '#count' do
       it 'returns nil' do
-        expect(-> { raster_l.count }).to raise_error ArcREST::InvalidQuery
+        expect(-> { raster_l.count }).to raise_error ArcREST::BadQuery
       end
     end
 
     context '#features(options)' do
       it 'returns nil' do
-        expect(-> { raster_l.features }).to raise_error ArcREST::InvalidQuery
+        expect(-> { raster_l.features }).to raise_error ArcREST::BadQuery
       end
     end
   end

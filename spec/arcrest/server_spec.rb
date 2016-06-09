@@ -23,7 +23,7 @@ describe ArcREST::Server do
 
   context '#json' do
     it 'returns a hash of server data' do
-      expect(server.json(URI(url)).class).to eq Hash
+      expect(server.json.class).to eq Hash
     end
   end
 

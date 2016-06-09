@@ -14,19 +14,24 @@ module ArcREST
       @url = url
       @uri = uri
       @server_uri = server_uri
-      @json = json(@uri)
+      @json = json
       @version = version
     end
 
-    def json(uri, options = {})
-      JSON.parse get(uri, options)
+    def json
+      parse_json @uri
     end
 
     def version
-      json(server_uri)['currentVersion'] # subclasses use server uri
+      parse_json(server_uri)['currentVersion'] # subclasses use server uri
     end
 
     protected
+
+    def parse_json(uri, options = {})
+      JSON.parse get(uri, options)
+    end
+
 
     def uri
       raise ArgumentError, BAD_ENDPOINT if (URI(@url).path =~ REGEX) != 0

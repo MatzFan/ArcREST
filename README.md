@@ -83,7 +83,7 @@ puts layer.valid_opts.inspect
 or by consulting the [docs](http://services.arcgisonline.com/arcgis/sdk/rest/index.html#/Query_Feature_Service_Layer/). One default is set: ```outFields: '*'``` - which requests data for all fields.
 
 
-The ```:where``` key is used with any valid SQL to query the layer fields. The default is '1=1' which returns all records (up to the ```@max_record_count``` value, usually 1,000). An InvalidQuery error is raised if the server gives a 400 error of this form:
+The ```:where``` key is used with any valid SQL to query the layer fields. The default is '1=1' which returns all records (up to the ```@max_record_count``` value, usually 1,000). An error is raised if the server gives a 400 error of this form:
 ```json
 {
   "error": {

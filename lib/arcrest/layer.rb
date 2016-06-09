@@ -1,11 +1,11 @@
 module ArcREST
   class InvalidOption < StandardError; end
-  class InvalidQuery < StandardError; end
+  class BadQuery < StandardError; end
   # a layer
   class Layer < Server
     include Attributable
 
-    ERR = 'error'.freeze
+    E = 'error'.freeze
     ATTRIBUTES = %w(id name type drawing_info fields max_record_count).freeze
     DEFAULT_PARAMS = { where: '1=1', outFields: '*' }.freeze
     PARAMS = %w(distance geometry geometryType inSR objectIds
@@ -64,7 +64,7 @@ module ArcREST
     end
 
     def valid_resp(uri, opts)
-      raise InvalidQuery, m(opts) if (resp = json(uri, opts)).keys.include? ERR
+      raise BadQuery, m(opts) if (resp = parse_json(uri, opts)).keys.include? E
       resp
     end
 
