@@ -65,8 +65,21 @@ puts layer.fields
 #=> ...
 ```
 
-Once you have a Layer object, you can query it's features. The [documention](http://services.arcgisonline.com/arcgis/sdk/rest/index.html#/Query_Feature_Service_Layer/) shows the possibilities. Here is a very simple example:
+Catalog, Service and Layer have a ```json``` method which returns information from the relevant server as a Hash (derived from JSON). In addition to the example methods above this can be parsed in the usual way - e.g:
+```ruby
+puts layer.json.keys.inspect
+#=> ["currentVersion", "id", "name", "type", "description", "copyrightText"...
+```
 
+Once you have a Layer object, you can perform queries on it. The [documention](http://services.arcgisonline.com/arcgis/sdk/rest/index.html#/Query_Feature_Service_Layer/) shows the possibilities. Here is a very simple example:
+
+The ```query``` method returns the whole server response as a Hash:
+```ruby
+puts layer.query(where: '1=0').inspect
+#=> {"objectIdFieldName"=>"objectid", "globalIdFieldName"=>"", "features"=>[]}
+```
+
+If you just want the features, use the ```features``` method:
 ```ruby
 features = layer.features(where: "agency='BLM'", returnGeometry: false)
 puts features.count
@@ -75,7 +88,7 @@ puts features.first
 #=> {"objectid"=>690, "agency"=>"BLM", "comments"=>" ", "active"=>"Y"...
 ```
 
-```features``` takes an options hash of API call params. Invalid key values raise an error. Valid params for the server can be listed like this:
+```query``` and ```features``` take an options hash of API call params. Invalid key values raise an error. Valid params for the server can be listed like this:
 ```ruby
 puts layer.valid_opts.inspect
 #=> ["dbVersion", "distance", "geometry", "geometryPrecision"...

@@ -78,22 +78,28 @@ describe ArcREST::Layer do
       end
     end
 
-    context '#features(options)' do
+    context '#query(options)' do
       it 'raises InvalidOption error with an invalid option key' do
-        lambda = -> { feature_layer.features(invalidOption: true) }
+        lambda = -> { feature_layer.query(invalidOption: true) }
         expect(lambda).to raise_error ArcREST::InvalidOption
       end
 
       it 'raises InvalidOption with an invalid option for the server version' do
-        l = -> { v10_0_feature_layer.features(returnM: true) }
+        l = -> { v10_0_feature_layer.query(returnM: true) }
         expect(l).to raise_error ArcREST::InvalidOption
       end
 
       it 'raises BadQuery with an invalid where: String' do
-        l = -> { v10_0_feature_layer.features(where: 'invalid SQL') }
+        l = -> { v10_0_feature_layer.query(where: 'invalid SQL') }
         expect(l).to raise_error ArcREST::BadQuery
       end
 
+      it 'returns a list of hashes, whose keys include "features"' do
+        expect(feature_layer.query(where: '1=0').keys).to include 'features'
+      end
+    end
+
+    context '#features(options)' do
       it 'returns a list of hashes, whose keys are: "geometry", "attributes"' do
         feature_layer.features.map(&:keys).each do |keys|
           expect(keys).to eq %w(geometry attributes)

@@ -32,6 +32,11 @@ module ArcREST
       query(outFields: nil, returnIdsOnly: true)['objectIds']
     end
 
+    def query(options = {})
+      validate(options.keys.map(&:to_s).sort)
+      valid_resp(build_uri, DEFAULT_PARAMS.merge(options))
+    end
+
     def features(options = {})
       query(options)['features']
     end
@@ -56,11 +61,6 @@ module ArcREST
     def camelify(name)
       words = name.split('_')
       words[1..-1].map(&:capitalize).unshift(words.first).join
-    end
-
-    def query(options)
-      validate(options.keys.map(&:to_s).sort)
-      valid_resp(build_uri, DEFAULT_PARAMS.merge(options))
     end
 
     def valid_resp(uri, opts)
