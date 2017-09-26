@@ -6,22 +6,24 @@ module ArcREST
     include Attributable
 
     E = 'error'.freeze
-    ATTRIBUTES = %w(id name type drawing_info fields max_record_count).freeze
+    DATE = 'esriFieldTypeDate'.freeze
+    ATTRIBUTES = %w[id name type drawing_info fields max_record_count].freeze
     DEFAULT_PARAMS = { where: '1=1', outFields: '*' }.freeze
-    PARAMS = %w(distance geometry geometryType inSR objectIds
+    PARAMS = %w[distance geometry geometryType inSR objectIds
                 outFields outSR relationParam returnDistinceValues
-                returnIdsOnly spatialRel time where).freeze
-    PARAMS_SP1 = %w(returnCountOnly).freeze
-    PARAMS_10_1 = %w(dbVersion geometryPrecision groupByFieldsForStatistics
+                returnIdsOnly spatialRel time where].freeze
+    PARAMS_SP1 = %w[returnCountOnly].freeze
+    PARAMS_10_1 = %w[dbVersion geometryPrecision groupByFieldsForStatistics
                      maxAllowableOffset multiPatchOption orderByFields
-                     outStatistics returnGeometry returnM returnZ).freeze
-    PARAMS_10_3 = %w(returnExtentOnly resultOffset resultRecordCount).freeze
+                     outStatistics returnGeometry returnM returnZ].freeze
+    PARAMS_10_3 = %w[returnExtentOnly resultOffset resultRecordCount].freeze
 
     attr_reader :valid_params # other accessors set in constructor
 
     def initialize(url)
       super
       generate_attributes # dynamically create & assign values to attributes :)
+      @fields = fields
     end
 
     def count

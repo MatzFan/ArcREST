@@ -36,14 +36,14 @@ The API defines a [resource heirarchy](http://services.arcgisonline.com/arcgis/s
 ```ruby
 require 'arcrest'
 
-catalog = ArcREST::Catalog.new('http://rmgsc.cr.usgs.gov/arcgis/rest/services')
+catalog = ArcREST::Catalog.new('https://www.geomac.gov/arcgis/rest/services')
 puts catalog.services
-#=> {"name"=>"cwqdr_main", "type"=>"MapServer"}
-#=> {"name"=>"ecosys_Africa", "type"=>"MapServer"}
-#=> {"name"=>"ecosys_SA", "type"=>"MapServer"}
+#=> {"name"=>"BIADigit", "type"=>"FeatureServer"}
+#=> {"name"=>"BIADigit", "type"=>"MapServer"}
+#=> {"name"=>"contAF", "type"=>"MapServer"}
 #=> ...
 
-service = ArcREST::Service.new('http://rmgsc.cr.usgs.gov/arcgis/rest/services/geomac_fires/FeatureServer')
+service = ArcREST::Service.new('https://www.geomac.gov/arcgis/rest/services/geomac_fires/FeatureServer')
 puts service.layers
 #=> {"id"=>1, "name"=>"Large Fire Points"}
 #=> {"id"=>2, "name"=>"Fire Perimeters"}

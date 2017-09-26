@@ -7,3 +7,5 @@
 /pkg/
 /spec/reports/
 /tmp/
+/bin/guard
+/bin/_guard-core

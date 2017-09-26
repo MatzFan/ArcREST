@@ -5,14 +5,17 @@ module ArcREST
 
     def initialize(url)
       super
-      @services = services
+      @folders = folders_
+      @services = services_
     end
 
-    def folders
+    private
+
+    def folders_
       @json['folders']
     end
 
-    def services
+    def services_
       @json['services']
     end
   end

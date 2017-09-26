@@ -5,20 +5,22 @@ module ArcREST
 
     def initialize(url)
       super
-      @max_record_count = max_record_count # may be nil
-      @capabilities = capabilities # may be empty
-      @layers = layers # may be empty
+      @max_record_count = max_record_count_
+      @capabilities = capabilities_
+      @layers = layers_
     end
 
-    def max_record_count
+    private
+
+    def max_record_count_
       @json['maxRecordCount']
     end
 
-    def capabilities
+    def capabilities_
       @json['capabilities'] ? @json['capabilities'].split(',') : nil
     end
 
-    def layers
+    def layers_
       @json['layers']
     end
   end

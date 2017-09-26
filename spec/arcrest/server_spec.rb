@@ -1,16 +1,15 @@
 describe ArcREST::Server do
-
   error = ArcREST::Server::BAD_ENDPOINT
-  let(:url) { 'http://rmgsc.cr.usgs.gov/arcgis/rest/services/' }
-  let(:v10_0_url) { 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services' }
+  let(:url) { 'https://www.geomac.gov/arcgis/rest/services/' }
+  let(:v_10_0_url) { 'http://sampleserver3.arcgisonline.com/ArcGIS/rest/services' }
   let(:bad_server_url) { ArcREST::Catalog.new('bad_url') }
   let(:server) { ArcREST::Server.new url }
-  let(:v10_0_server) { ArcREST::Server.new v10_0_url }
+  let(:v_10_0_server) { ArcREST::Server.new v_10_0_url }
 
   context '#new(url)' do
     context 'with a valid endpoint url address' do
       it 'returns an instance of the class' do
-        expect(server.class).to eq ArcREST::Server
+        expect(server.class).to eq described_class
       end
     end
 
@@ -29,8 +28,8 @@ describe ArcREST::Server do
 
   context '#version' do
     it 'returns the server version number' do
-      expect(server.version).to eq 10.21
-      expect(v10_0_server.version).to eq 10
+      expect(server.version).to eq 10.31
+      expect(v_10_0_server.version).to eq 10.05
     end
   end
 end

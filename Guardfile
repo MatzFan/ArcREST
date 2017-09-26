@@ -1,4 +1,4 @@
-notification :gntp
+notification :libnotify, transient: true, append: false, urgency: :critical
 
 guard :rspec, cmd: 'bundle exec rspec' do
   watch(%r{^lib/(.+).rb$}) do |m| # watch /lib/ files
